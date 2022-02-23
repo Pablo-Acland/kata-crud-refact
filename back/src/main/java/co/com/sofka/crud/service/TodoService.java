@@ -1,4 +1,4 @@
-package co.com.sofka.crud.repository;
+package co.com.sofka.crud.service;
 
 import co.com.sofka.crud.model.Todo;
 import co.com.sofka.crud.repository.TodoRepository;
