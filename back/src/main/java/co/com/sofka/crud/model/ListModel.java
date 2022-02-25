@@ -1,7 +1,10 @@
 package co.com.sofka.crud.model;
 
 import javax.persistence.*;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,12 +19,13 @@ public class ListModel {
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "listId")
-    private Set<Todo> todos = new HashSet<Todo>();
+    private List todos = new ArrayList<Todo>();
 
     public ListModel() { }
 
-    public ListModel(String name) {
+    public ListModel(String name, List<Todo> todo) {
         this.name = name;
+        this.todos = todo;
     }
 
     public Long getId() {
@@ -36,36 +40,12 @@ public class ListModel {
         this.name = name;
     }
 
-    public Set<Todo> getTodos() {
+    public List<Todo> getTodos() {
         return todos;
     }
 
-    public void setTodos(Set<Todo> todos) {
+    public void setTodos(List<Todo> todos) {
         this.todos = todos;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof ListModel)) {
-            return false;
-        }
-        ListModel listModel = (ListModel) o;
-        return Objects.equals(id, listModel.id) && Objects.equals(name, listModel.name) && Objects.equals(todos, listModel.todos);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, todos);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " id='" + getId() + "'" +
-                ", name='" + getName() + "'" +
-                ", todos='" + getTodos() + "'" +
-                "}";
-    }
 }

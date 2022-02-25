@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 public class Todo {
@@ -14,6 +15,7 @@ public class Todo {
     private String name;
     @Column(name = "completed", nullable = false)
     private boolean completed;
+    private long Idlist;
 
 
 

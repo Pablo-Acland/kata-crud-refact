@@ -5,26 +5,32 @@ import co.com.sofka.crud.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class TodoService {
 
     @Autowired
-    private TodoRepository repository;
+    private TodoRepository todorepository;
 
     public Iterable<Todo> list(){
-        return repository.findAll();
+        return todorepository.findAll();
     }
 
     public Todo save(Todo todo){
-        return repository.save(todo);
+        return todorepository.save(todo);
     }
 
     public void delete(Long id){
-        repository.delete(get(id));
+        todorepository.delete(getId(id));
     }
 
-    public Todo get(Long id){
-         return repository.findById(id).orElseThrow();
+    public Todo getId(Long id){
+         return todorepository.findById(id).orElseThrow();
     }
+
+    public Iterable<Todo> getIdlist(long Idlist){return  todorepository.findByIdlist(Idlist);}
+
+
 
 }
