@@ -1,35 +1,33 @@
 package co.com.sofka.crud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import javax.persistence.*;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+
 
 @Entity
 public class ListModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "name", length = 50, nullable = false)
+    private long id;
     private String name;
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "listId")
-    private List todos = new ArrayList<Todo>();
+    @OneToMany(mappedBy = "list")
+    @Cascade(CascadeType.DELETE)
+    @JsonIgnoreProperties("list")
+    private List<Todo> todos;
 
-    public ListModel() { }
 
-    public ListModel(String name, List<Todo> todo) {
-        this.name = name;
-        this.todos = todo;
-    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -47,5 +45,4 @@ public class ListModel {
     public void setTodos(List<Todo> todos) {
         this.todos = todos;
     }
-
 }
