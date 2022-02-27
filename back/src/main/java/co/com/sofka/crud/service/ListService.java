@@ -30,19 +30,19 @@ public class ListService {
     public List<ListDTO> list(){
         List<ListModel> list = (List<ListModel>) listrepository.findAll();
 
-        return listfactory.toGroupsDTO(list);
+        return listfactory.toListDTO(list);
     }
-    public ListDTO getListId(Long list){
-        ListModel group = listrepository.findById(list).orElseThrow(() -> new RuntimeException("No existe el id para actualziar"));
-        return listfactory.toGroupDTO(group);
+    public ListDTO getListId(Long Idlist){
+        ListModel list = listrepository.findById(Idlist).orElseThrow(() -> new RuntimeException("No existe el id "));
+        return listfactory.toListDTO(list);
     }
 
     public ListDTO saveList(ListDTO listDTO) {
         if(listDTO.getName().trim().isEmpty()){
             throw new RuntimeException("El nombre es necesario ");
         }
-        ListModel list = listfactory.toGroupTodos(listDTO);
-        listDTO = listfactory.toGroupDTO(listrepository.save(list));
+        ListModel list = listfactory.toListTodos(listDTO);
+        listDTO = listfactory.toListDTO(listrepository.save(list));
         return listDTO;
     }
 
@@ -53,7 +53,7 @@ public class ListService {
 
     }
 
-    public TodoDTO saveListId(Long Idlist, TodoDTO todoDTO) {
+    public TodoDTO saveTodoByIdList(Long Idlist, TodoDTO todoDTO) {
         if(todoDTO.getName().trim().isEmpty()){
             throw new RuntimeException("Campo nombre no puede estár vacío");
         }

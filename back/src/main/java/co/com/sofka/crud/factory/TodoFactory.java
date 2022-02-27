@@ -24,9 +24,11 @@ public class TodoFactory {
     }
 
     public List<TodoDTO> toTodoList(List<Todo> todo){
-        List<TodoDTO> todoDTO = todo.stream().map(this::toTodoDTO).collect(Collectors.toList());
 
-        return todoDTO;
+            List<TodoDTO> todoDTO = todo.stream().map(this::toTodoDTO).collect(Collectors.toList());
+
+
+            return todoDTO;
     }
 
     public Todo toTodoModel(TodoDTO todoDTO){

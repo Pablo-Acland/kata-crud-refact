@@ -16,7 +16,7 @@ public class Todo {
 
 
     @ManyToOne
-    @JoinColumn(name = "list_id", referencedColumnName = "list_id")
+    @JoinColumn(name = "list_id", referencedColumnName = "id")
     private ListModel list;
 
 

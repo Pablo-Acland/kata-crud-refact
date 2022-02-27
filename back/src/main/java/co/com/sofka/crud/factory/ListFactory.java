@@ -12,24 +12,28 @@ public class ListFactory {
 
     private TodoFactory todoFactory;
 
-    public ListDTO toGroupDTO(ListModel list){
-        ListDTO groupDTO = new ListDTO();
-        groupDTO.setIdlist(list.getId());
-        groupDTO.setName(list.getName());
 
-        if(groupDTO.getTodos() != null)
-            groupDTO.setTodos(todoFactory.toTodoList(list.getTodos()));
 
-        return groupDTO;
-    }
+    public ListDTO toListDTO(ListModel list){
+        ListDTO listDTO = new ListDTO();
+        listDTO.setIdlist(list.getId());
+        listDTO.setName(list.getName());
 
-    public List<ListDTO> toGroupsDTO(List<ListModel> list){
-        List<ListDTO> listDTO = list.stream().map(this::toGroupDTO).collect(Collectors.toList());
+        if(listDTO.getTodos() != null)
+            listDTO.setTodos(todoFactory.toTodoList(list.getTodos()));
 
         return listDTO;
     }
 
-    public ListModel toGroupTodos(ListDTO listDTO){
+    public List<ListDTO> toListDTO(List<ListModel> list){
+           List<ListDTO> listDTO = list.stream().map(this::toListDTO).collect(Collectors.toList());
+
+           return listDTO;
+
+
+    }
+
+    public ListModel toListTodos(ListDTO listDTO){
        ListModel list = new ListModel();
 
         list.setId(listDTO.getIdlist());

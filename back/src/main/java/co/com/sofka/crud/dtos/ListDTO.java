@@ -12,11 +12,6 @@ public class ListDTO {
     public ListDTO() {
     }
 
-    public ListDTO(long idlist, String name, List<TodoDTO> todos) {
-        this.idlist = idlist;
-        this.name = name;
-        this.todos = todos;
-    }
 
     public long getIdlist() {
         return idlist;

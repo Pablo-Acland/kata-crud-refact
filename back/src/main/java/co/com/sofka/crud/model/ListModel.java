@@ -12,7 +12,7 @@ import java.util.List;
 public class ListModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
 
     @OneToMany(mappedBy = "list")
@@ -26,7 +26,7 @@ public class ListModel {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

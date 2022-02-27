@@ -37,6 +37,12 @@ public class ListController {
         }
         throw new RuntimeException("No existe el id para actualziar");
     }
+
+    @PostMapping(value = "/save/{Idlist}")
+    public TodoDTO saveTodoByIdList(@PathVariable("Idlist") Long Idlist, @RequestBody TodoDTO todoDTO) {
+        return listservice.saveTodoByIdList(Idlist, todoDTO);
+    }
+
     @DeleteMapping(value = "/delete/{id}")
     public void delete(@PathVariable("id")Long id){
         listservice.deleteListById(id);
