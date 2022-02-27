@@ -2,39 +2,44 @@ package co.com.sofka.crud.controller;
 
 
 import co.com.sofka.crud.dtos.ListDTO;
-import co.com.sofka.crud.model.ListModel;
+import co.com.sofka.crud.dtos.TodoDTO;
 import co.com.sofka.crud.service.ListService;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Component
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/List")
 public class ListController {
 
+    @Autowired
     private ListService listservice;
 
     @GetMapping(value = "/all")
     public List<ListDTO> list(){return listservice.list();}
 
-    @PostMapping(value = "/save")
-    public ListDTO save(@RequestBody ListDTO list){
-        return listservice.saveList(list);
+    @GetMapping(value = "/{Idlist}")
+    public ListDTO getGroupById(@PathVariable("Idlist") Long Idlist){
+        return listservice.getListId(Idlist);
     }
 
-    @PutMapping(value = "/update")
-    public ListDTO update(@RequestBody ListDTO List){
-        if(List.getId() != null){
-            return listservice.saveList(List);
+    @PostMapping(value = "/save")
+    public ListDTO save(@RequestBody ListDTO listDTO){
+        return listservice.saveList(listDTO);
+    }
+
+    @PutMapping(value = "/update/{Idlist}")
+    public TodoDTO update(@PathVariable("Idlist") Long Idlist, @RequestBody TodoDTO todo){
+        if(todo.getIdlist() != null){
+            return listservice.updateTodoByList(Idlist, todo);
         }
         throw new RuntimeException("No existe el id para actualziar");
     }
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public void delete(@PathVariable("id")Long id){
-        listservice.delete(id);
+        listservice.deleteListById(id);
     }
 
 }

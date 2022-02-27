@@ -32,12 +32,11 @@ public class ListService {
 
         return listfactory.toGroupsDTO(list);
     }
-    public ListDTO saveListId(Long list){
+    public ListDTO getListId(Long list){
         ListModel group = listrepository.findById(list).orElseThrow(() -> new RuntimeException("No existe el id para actualziar"));
-
-
         return listfactory.toGroupDTO(group);
     }
+
     public ListDTO saveList(ListDTO listDTO) {
         if(listDTO.getName().trim().isEmpty()){
             throw new RuntimeException("El nombre es necesario ");
