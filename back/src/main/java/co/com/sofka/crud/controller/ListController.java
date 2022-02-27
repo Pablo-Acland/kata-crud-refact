@@ -1,11 +1,13 @@
 package co.com.sofka.crud.controller;
 
 
+import co.com.sofka.crud.dtos.ListDTO;
 import co.com.sofka.crud.model.ListModel;
-import co.com.sofka.crud.model.Todo;
 import co.com.sofka.crud.service.ListService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Component
 @RestController
@@ -16,17 +18,17 @@ public class ListController {
     private ListService listservice;
 
     @GetMapping(value = "/all")
-    public Iterable<ListModel> Todos(){return listservice.list();}
+    public List<ListDTO> list(){return listservice.list();}
 
     @PostMapping(value = "/save")
-    public ListModel save(@RequestBody ListModel list){
-        return listservice.save(list);
+    public ListDTO save(@RequestBody ListDTO list){
+        return listservice.saveList(list);
     }
 
     @PutMapping(value = "/update")
-    public ListModel update(@RequestBody ListModel List){
+    public ListDTO update(@RequestBody ListDTO List){
         if(List.getId() != null){
-            return listservice.save(List);
+            return listservice.saveList(List);
         }
         throw new RuntimeException("No existe el id para actualziar");
     }

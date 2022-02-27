@@ -1,5 +1,6 @@
 package co.com.sofka.crud.controller;
 
+import co.com.sofka.crud.dtos.TodoDTO;
 import co.com.sofka.crud.model.ListModel;
 import co.com.sofka.crud.repository.ListRepository;
 import co.com.sofka.crud.service.TodoService;
@@ -7,6 +8,8 @@ import co.com.sofka.crud.model.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Component
 @RestController
@@ -20,7 +23,7 @@ public class TodoController {
     private ListRepository listrepository;
 
     @GetMapping(value = "/all")
-    public Iterable<Todo> Todos(){return todoservice.list();}
+    public List<TodoDTO> Todos(){return todoservice.list();}
 
     @GetMapping(value = "/alltolist/{id}")
     public Iterable<Todo> list(@PathVariable("id") Long list){
@@ -29,14 +32,14 @@ public class TodoController {
     }
     
     @PostMapping(value = "/save/{id}")
-    public Todo save(@RequestBody Todo todo, @PathVariable("id")Long Idlist){
-        return todoservice.save(todo, Idlist);
+    public Todo save(@RequestBody Todo todo){
+        return todoservice.saveTodo(todo);
     }
 
     @PutMapping(value = "/update")
     public Todo update(@RequestBody Todo todo){
         if(todo.getId() != null){
-            return todoservice.update(todo);
+            return ;
         }
         throw new RuntimeException("No existe el id para actualziar");
     }
