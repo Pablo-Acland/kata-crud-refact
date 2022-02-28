@@ -2,8 +2,7 @@ package co.com.sofka.crud.service;
 
 import co.com.sofka.crud.dtos.ListDTO;
 import co.com.sofka.crud.dtos.TodoDTO;
-import co.com.sofka.crud.factory.ListFactory;
-import co.com.sofka.crud.factory.TodoFactory;
+import co.com.sofka.crud.factory.Factory;
 import co.com.sofka.crud.model.ListModel;
 import co.com.sofka.crud.model.Todo;
 import co.com.sofka.crud.repository.ListRepository;
@@ -21,28 +20,26 @@ public class ListService {
     @Autowired
     private TodoRepository todorepository;
     @Autowired
-    private ListFactory listfactory;
-
-    @Autowired
-    private TodoFactory todosfactory;
+    private Factory factory;
 
 
     public List<ListDTO> list(){
         List<ListModel> list = (List<ListModel>) listrepository.findAll();
-
-        return listfactory.toListDTO(list);
+        System.out.println("ACA TOY");
+        System.out.println(list.get(0).getName());
+        return factory.toListsDTO(list);
     }
     public ListDTO getListId(Long Idlist){
         ListModel list = listrepository.findById(Idlist).orElseThrow(() -> new RuntimeException("No existe el id "));
-        return listfactory.toListDTO(list);
+        return factory.toListDTO(list);
     }
 
     public ListDTO saveList(ListDTO listDTO) {
         if(listDTO.getName().trim().isEmpty()){
             throw new RuntimeException("El nombre es necesario ");
         }
-        ListModel list = listfactory.toListTodos(listDTO);
-        listDTO = listfactory.toListDTO(listrepository.save(list));
+        ListModel list = factory.toListTodos(listDTO);
+        listDTO = factory.toListDTO(listrepository.save(list));
         return listDTO;
     }
 
@@ -59,18 +56,18 @@ public class ListService {
         }
 
         ListModel list = listrepository.findById(Idlist).orElseThrow(() -> new RuntimeException("El id no existe"));
-        Todo todo = todosfactory.toTodoModel(todoDTO);
+        Todo todo = factory.toTodoModel(todoDTO);
         todo.setList(list);
-        todoDTO = todosfactory.toTodoDTO(todorepository.save(todo));
+        todoDTO = factory.toTodoDTO(todorepository.save(todo));
 
         return todoDTO;
     }
 
-    public TodoDTO updateTodoByList(Long Idlist, TodoDTO todoDTO) {
+    public TodoDTO updateTodoByIdList(Long Idlist, TodoDTO todoDTO) {
 
         ListModel list = listrepository.findById(Idlist).orElseThrow(() -> new RuntimeException("El id no existe"));
         todorepository.findById(todoDTO.getId()).orElseThrow(() -> new RuntimeException("El id no existe"));
-        Todo todo = todosfactory.toTodoModel(todoDTO);
+        Todo todo = factory.toTodoModel(todoDTO);
         todo.setList(list);
 
         list.getTodos().stream().forEach((i) -> {
@@ -84,7 +81,7 @@ public class ListService {
 
         todo.setList(list);
         listrepository.save(list);
-        todoDTO = todosfactory.toTodoDTO(todo);
+        todoDTO = factory.toTodoDTO(todo);
 
         return todoDTO;
     }

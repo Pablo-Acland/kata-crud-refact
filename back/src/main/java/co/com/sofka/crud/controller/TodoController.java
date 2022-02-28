@@ -10,13 +10,14 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/List")
 public class TodoController {
 
     @Autowired
     private TodoService todoservice;
 
 
-    @GetMapping(value = "/api/all")
+    @GetMapping(value = "/todo/all")
     public List<TodoDTO> Todos(){return todoservice.list();}
 
 

@@ -1,15 +1,17 @@
 import React, {useContext, useEffect, } from "react";
-import { Store } from "./Store";
+import Store from "../../funciones/Store";
+import HOST_API from "../../conexion/Host_API";
+import Swal from "sweetalert2";
 
-
-const HOST_API ="http://localhost:8080/api";
-const List = () => {
+const ListTodo = (props) => {
     
     const { dispatch, state: { todo } } = useContext(Store);
-    const currentList = todo.list;
+    const currentList = todo.list.filter(todo => {
+      return todo.Idlist === props.idlist;
+    });
   
     useEffect(() => {
-      fetch(HOST_API + "/todos")
+      fetch(HOST_API + "/todo/all")
         .then(response => response.json())
         .then((list) => {
           dispatch({ type: "update-list", list })
@@ -18,10 +20,20 @@ const List = () => {
   
   
     const onDelete = (id) => {
-      fetch(HOST_API + "/" + id + "/todo", {
-        method: "DELETE"
-      }).then((list) => {
-        dispatch({ type: "delete-item", id })
+      Swal.fire({
+        title: '¿Estas seguro de querer eliminar la tarea?',
+        showDenyButton: true,
+        confirmButtonText: 'SI',
+        denyButtonText: `NO`,
+      }).then((result) => {
+          if (result.isConfirmed) {
+          fetch(HOST_API + "/delete/"+ id, {
+            method: "DELETE"
+          }).then((list) => {
+            dispatch({ type: "delete-item", id })
+          })
+          Swal.fire('¡Eliminada!')
+        }
       })
     };
   
@@ -35,7 +47,7 @@ const List = () => {
         id: todo.id,
         completed: event.target.checked
       };
-      fetch(HOST_API + "/todo", {
+      fetch(HOST_API + "/update/todo/"+ props.id, {
         method: "PUT",
         body: JSON.stringify(request),
         headers: {
@@ -66,12 +78,14 @@ const List = () => {
               <td>{todo.id}</td>
               <td>{todo.name}</td>
               <td><input type="checkbox" defaultChecked={todo.completed} onChange={(event) => onChange(event, todo)}></input></td>
-              <td><button onClick={() => onDelete(todo.id)}>Eliminar</button></td>
-              <td><button onClick={() => onEdit(todo)}>Editar</button></td>
+              <td><button className="btn btn-danger" onClick={() => onDelete(todo.id)}>Eliminar</button></td>
+              <td><button className="btn btn-primary" onClick={() => onEdit(todo)}>Editar</button></td>
             </tr>
           })}
         </tbody>
       </table>
     </div>
-  }
-  export default List;
+
+}
+
+  export default ListTodo;

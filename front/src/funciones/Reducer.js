@@ -1,6 +1,29 @@
 
-function reducer(state, action) {
+function Reducer(state, action) {
     switch (action.type) {
+
+      case "add-group":
+        const listUp = state.listTodo.list;
+        listUp.push(action.item);
+        return { ...state, listTodo: { list:listUp, item: {} } };
+  
+      case "delete-group":
+        const listUpDelete = state.listTodo;
+        const listUpdate = listUpDelete.list.filter((item) => {
+          return item.id !== action.id;
+        });
+        listUpDelete.list = listUpdate;
+        return { ...state, listTodo: listUpDelete };
+  
+        case "update-list-group":
+          const todoListUpList = state.listTodo;
+          todoListUpList.list = action.list;
+          return { ...state, listTodo: todoListUpList };
+
+
+//* ************************************************************************************** */
+
+
       case 'update-item':
         const todoUpItem = state.todo;
         const listUpdateEdit = todoUpItem.list.map((item) => {
@@ -14,10 +37,10 @@ function reducer(state, action) {
         return { ...state, todo: todoUpItem }
       case 'delete-item':
         const todoUpDelete = state.todo;
-        const listUpdate = todoUpDelete.list.filter((item) => {
+        const lisUpdate = todoUpDelete.list.filter((item) => {
           return item.id !== action.id;
         });
-        todoUpDelete.list = listUpdate;
+        todoUpDelete.list = lisUpdate;
         return { ...state, todo: todoUpDelete }
       case 'update-list':
         const todoUpList = state.todo;
@@ -35,4 +58,4 @@ function reducer(state, action) {
         return state;
     }
   }
-  export default reducer;
+  export default Reducer;

@@ -17,8 +17,9 @@ public class ListController {
     @Autowired
     private ListService listservice;
 
-    @GetMapping(value = "/all")
-    public List<ListDTO> list(){return listservice.list();}
+    @GetMapping(value = "/Lists")
+    public List<ListDTO> list(){
+        return listservice.list();}
 
     @GetMapping(value = "/{Idlist}")
     public ListDTO getGroupById(@PathVariable("Idlist") Long Idlist){
@@ -33,7 +34,7 @@ public class ListController {
     @PutMapping(value = "/update/{Idlist}")
     public TodoDTO update(@PathVariable("Idlist") Long Idlist, @RequestBody TodoDTO todo){
         if(todo.getIdlist() != null){
-            return listservice.updateTodoByList(Idlist, todo);
+            return listservice.updateTodoByIdList(Idlist, todo);
         }
         throw new RuntimeException("No existe el id para actualziar");
     }
@@ -41,6 +42,13 @@ public class ListController {
     @PostMapping(value = "/save/{Idlist}")
     public TodoDTO saveTodoByIdList(@PathVariable("Idlist") Long Idlist, @RequestBody TodoDTO todoDTO) {
         return listservice.saveTodoByIdList(Idlist, todoDTO);
+    }
+    @PutMapping(value = "/update/todo/{Idlist}")
+    public TodoDTO updateTodoByIdList(@PathVariable("Idlist") Long Idlist, @RequestBody TodoDTO todoDTO){
+        if(todoDTO.getId() != null){
+            return listservice.updateTodoByIdList(Idlist, todoDTO);
+        }
+        throw new RuntimeException("El ToDo a actualizar debe contener un id");
     }
 
     @DeleteMapping(value = "/delete/{id}")

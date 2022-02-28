@@ -1,16 +1,17 @@
 import React from 'react';
-import Form from './components/Form';
-import StoreProvider from './components/Store';
-import List from './components/List';
 
-
+import { StoreProvider } from './funciones/Store';
+import FormList from './components/List/FormList';
+import ListList from './components/List/ListList';
 
 function App() {
 
   return <StoreProvider>
+    <div className="container">
     <h3>To-Do List</h3>
-    <Form />
-    <List />
+    <FormList />
+    <ListList />
+    </div>
   </StoreProvider>
 }
 
