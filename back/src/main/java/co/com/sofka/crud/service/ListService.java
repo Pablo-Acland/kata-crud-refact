@@ -25,8 +25,6 @@ public class ListService {
 
     public List<ListDTO> list(){
         List<ListModel> list = (List<ListModel>) listrepository.findAll();
-        System.out.println("ACA TOY");
-        System.out.println(list.get(0).getName());
         return factory.toListsDTO(list);
     }
     public ListDTO getListId(Long Idlist){

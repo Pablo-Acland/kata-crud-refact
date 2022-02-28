@@ -16,15 +16,12 @@ public class Factory {
 
     //List
     public ListDTO toListDTO(ListModel list){
-        System.out.println("ACA TOY");
-        System.out.println(list.getName());
         ListDTO listDTO = new ListDTO();
         listDTO.setIdlist(list.getId());
         listDTO.setName(list.getName());
-        System.out.println("acatoy");
-        System.out.println(listDTO.getName());
+
         if(listDTO.getTodos()!= null) {
-            System.out.println("hola");
+
             listDTO.setTodos(toTodoList(list.getTodos()));
         }
         return listDTO;
